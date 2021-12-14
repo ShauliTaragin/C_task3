@@ -3,6 +3,7 @@
 #define WORD 30
 #define TXT 1024
 
+char words[WORD], paragraph[TXT];
 static int sumg = 0;
 
 int convertToGem(char c){
@@ -14,8 +15,92 @@ int convertToGem(char c){
     }
     return 0;
 }
+char reverse_letter(char a ){
+    if(a>='A' && a<='Z'){
+        return (char)90-(a-65);
+    }
+    if(a>='a' && a<='z'){
+        return (char)122-(a-97);
+    }
+    return a;
+}
+
+int isAlphabet(char c){
+    if((c>='a' && c<='z') | (c>='A' && c<='Z')){
+        return 1;
+    }
+    return 0;
+}
+
+void Atbash(){
+    int sizeword = strlen(words);
+    char atbrev[sizeword];
+    for (int i = sizeword-1,j=0; j<sizeword | 0<=i; i--,j++){
+        atbrev[j] = reverse_letter(words[i]);
+    }
+    char atb[sizeword];
+    for (int i = 0; i < sizeword; i++){
+        atb[i] = reverse_letter(words[i]);
+    }
+    int start = 0;
+    int end =1;
+    int counter1 =0;
+    int counter2 =0;
+    int lengthy = strlen(paragraph);
+    char to_print[TXT];
+    int counter_for_arr=0;
+    while (end!=lengthy) {
+        if(paragraph[end]==' '){
+            end++;
+            continue;
+        }
+        if(counter1== sizeword){
+            for (int i = start; i < end; i++){
+                to_print[counter_for_arr] = paragraph[i];
+                counter_for_arr++;
+            }
+            to_print[counter_for_arr] = '~';
+            counter_for_arr++;
+            start++;
+            end=start;
+            counter1=0;
+            counter2=0;
+            continue;
+        }
+        if(counter2 == sizeword){
+            for (int i = start; i < end; i++){
+                to_print[counter_for_arr] = paragraph[i];
+                counter_for_arr++;
+            }
+            to_print[counter_for_arr] = '~';
+            counter_for_arr++;
+            start++;
+            end=start;
+            counter2=0;
+            counter1=0;
+            continue;
+        }
+        if(paragraph[end]==atb[counter1] | paragraph[end]==atbrev[counter2]){
+            if(paragraph[end]==atb[counter1]){
+                counter1++;
+            }
+            if(paragraph[end]==atbrev[counter2]){
+                counter2++;
+            }
+            end++;
+        }
+        else{
+            counter1=0;
+            counter2=0;
+            start++;
+            end=start;
+        }
+    }
+    to_print[strlen(to_print)-1]='\0';
+    printf("\n%s" , to_print);
+}
+
 void User(){
-    char words[WORD], paragraph[TXT];
     for (int i = 0; i < WORD; ++i) {
         scanf("%[^\n]", words);
         if(words[i] == '\0'){
@@ -24,19 +109,51 @@ void User(){
         sumg += convertToGem(words[i]);
     }
     scanf("%[^~]", paragraph);
-    paragraph[strlen(paragraph)]='~';
-    int pointer_for_text = 0;
-    for (int i = 0; i < TXT; ++i) {
-        int temp [TXT];
+    int start = 0;
+    int end =0;
+    int temp_sum;
+    int lengthy = strlen(paragraph);
+    char to_print[TXT];
+    int counter_for_arr=0;
+    while (end!=lengthy) {
+        if(!isAlphabet(paragraph[start])){
+            start++;
+            end=start;
+            continue;
+        }
+        temp_sum+=convertToGem(paragraph[end]);
+        if(!isAlphabet(paragraph[end])){
+            end++;
+            continue;
+        }
+        if(temp_sum==sumg){
+            for (int i = start; i <= end; i++){
+                to_print[counter_for_arr] = paragraph[i];
+                counter_for_arr++;
+            }
+            to_print[counter_for_arr] = '~';
+            counter_for_arr++;
+            start++;
+            temp_sum=0;
+            end=start;
+        }
+        else if(temp_sum>sumg){
+            start++;
+            temp_sum=0;
+            end=start;
+        }
+        else{
+            end++;
+        }
     }
-    
+    to_print[strlen(to_print)-1]='\0';
+    printf("%s\n" , to_print);
 
-
-    printf("%s", words);
-    printf("%s\n", paragraph);
+    // printf("%s", words);
+    // printf("%s\n", paragraph);
 }
-
 void main(){
     User();
+    Atbash();
     //printf("%d",smug);
 }
