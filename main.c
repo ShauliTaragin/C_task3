@@ -43,13 +43,14 @@ void Atbash(){
         atb[i] = reverse_letter(words[i]);
     }
     int start = 0;
-    int end =1;
+    int end =0;
     int counter1 =0;
     int counter2 =0;
     int lengthy = strlen(paragraph);
     char to_print[TXT];
+    to_print[0]=0;
     int counter_for_arr=0;
-    while (end!=lengthy) {
+    while (end<=lengthy) {
         if(paragraph[end]==' '){
             end++;
             continue;
@@ -81,11 +82,28 @@ void Atbash(){
             continue;
         }
         if(paragraph[end]==atb[counter1] | paragraph[end]==atbrev[counter2]){
+            int counter_temp = counter1;
             if(paragraph[end]==atb[counter1]){
-                counter1++;
+                if(paragraph[end]!=atbrev[counter2] & counter2!=0){
+                    counter2=0;
+                    start++;
+                    end=start;
+                    continue;
+                }
+                else{
+                    counter1++;
+                }
             }
             if(paragraph[end]==atbrev[counter2]){
-                counter2++;
+                if(paragraph[end]!=atb[counter_temp] & counter_temp!=0){
+                    counter1=0;
+                    start++;
+                    end=start;
+                    continue;
+                }
+                else{
+                    counter2++;
+                }
             }
             end++;
         }
@@ -96,8 +114,13 @@ void Atbash(){
             end=start;
         }
     }
-    to_print[strlen(to_print)-1]='\0';
-    printf("\n%s" , to_print);
+    for(int i = counter_for_arr-1 ; i< sizeof(to_print)/sizeof(to_print[0]);i++){
+        to_print[i] = '\0';
+    }
+    if(to_print[0]!=0){
+        printf("%s\n" , to_print);
+    }
+    printf("\n");
 }
 
 void User(){
@@ -108,12 +131,14 @@ void User(){
         }
         sumg += convertToGem(words[i]);
     }
+    char temp = getchar();
     scanf("%[^~]", paragraph);
     int start = 0;
     int end =0;
     int temp_sum;
     int lengthy = strlen(paragraph);
     char to_print[TXT];
+    to_print[0]=0;
     int counter_for_arr=0;
     while (end!=lengthy) {
         if(!isAlphabet(paragraph[start])){
@@ -146,8 +171,12 @@ void User(){
             end++;
         }
     }
-    to_print[strlen(to_print)-1]='\0';
-    printf("%s\n" , to_print);
+    for(int i = counter_for_arr-1 ; i< sizeof(to_print)/sizeof(to_print[0]);i++){
+        to_print[i] = '\0';
+    }
+    if(to_print[0]!=0){
+        printf("%s\n" , to_print);
+    }
 
     // printf("%s", words);
     // printf("%s\n", paragraph);
