@@ -298,8 +298,8 @@ int main() {
     printf("Gematria Sequences: ");
     User();
     printf("Atbash Sequences: ");
-    printf("\n");
     Atbash();
+    printf("\n");
     printf("Anagram Sequences: ");
     Anagram();
     return 0;
