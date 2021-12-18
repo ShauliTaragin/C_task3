@@ -315,5 +315,5 @@ int main() {
     Atbash();
     printf("Anagram Sequences: ");
     Anagram();
-    return 1;
+    return 0;
 }
