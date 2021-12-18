@@ -229,10 +229,7 @@ void Atbash() {
         to_print[i] = '\0';
     }
     if (to_print[0] != 0) {
-        printf("%s\n", to_print);
-    }
-    if (strlen(to_print) == 0) {
-        printf(" \n");
+        printf("%s", to_print);
     }
 }
 
@@ -301,6 +298,7 @@ int main() {
     printf("Gematria Sequences: ");
     User();
     printf("Atbash Sequences: ");
+    printf("\n");
     Atbash();
     printf("Anagram Sequences: ");
     Anagram();
