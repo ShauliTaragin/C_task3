@@ -137,7 +137,7 @@ void Anagram() {
             char *tempy = (char *) calloc(strlen(temp_print), sizeof(char));
             strncpy(tempy, temp_print, count_for_print - 1);
             tempy[strlen(temp_print) - 1] = '\0';
-            printf("%s\n", tempy);
+            printf("%s", tempy);
             if (strlen(tempy) == 0) {
                 printf("\n");
             }
@@ -232,7 +232,7 @@ void Atbash() {
         printf("%s\n", to_print);
     }
     if (strlen(to_print) == 0) {
-        printf("\n");
+        printf(" \n");
     }
 }
 
@@ -277,23 +277,12 @@ void User() {
             end++;
         }
     }
-/*    for (int i = counter_for_arr - 1; i < sizeof(to_print); i++) {
-        to_print[i] = '\0';
-    }*/
     if (strlen(to_print) > 0) {
         char *tempy = (char *) calloc(strlen(to_print), sizeof(char));
         strncpy(tempy, to_print, counter_for_arr);
         tempy[strlen(to_print)] = '\0';
         printf("%s\n", tempy);
-        if (strlen(tempy) == 0) {
-            printf("\n");
-        }
     }
-/*    char *temp_array2 = (char *) malloc(counter_for_arr);
-    strncpy(temp_array2, to_print, counter_for_arr);*/
-/*    if (to_print[0] != 0) {
-        printf("%s\n", to_print);
-    }*/
     if (strlen(to_print) == 0) {
         printf("\n");
     }
